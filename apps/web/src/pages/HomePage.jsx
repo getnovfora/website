@@ -225,7 +225,6 @@ function HomePage() {
                 Event hooks, service providers, and Blade components. Build custom features without forking the core.
               </p>
             </motion.div>
-            </motion.div>
           </div>
           <div className="mt-12 text-center">
             <Link to="/features">
