@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 60 20% 98%;
+    --foreground: 24 20% 9%;
+    --secondary-text: 30 22% 30%;
+    --accent: 36 78% 43%;
+    --accent-hover: 36 78% 34%;
+    --parchment: 40 40% 92%;
+    --sand: 42 40% 87%;
+    --border: 42 25% 81%;
+    --card: 0 0% 100%;
+    --card-foreground: 24 20% 9%;
+    --primary: 36 78% 43%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 40% 92%;
+    --secondary-foreground: 24 20% 9%;
+    --muted: 42 40% 87%;
+    --muted-foreground: 30 22% 30%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 24 20% 9%;
+    --input: 42 25% 81%;
+    --ring: 36 78% 43%;
+    --radius: 0.5rem;
+    
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* New font custom property for Sohne / fallback web-safe stack */
+    --font-sohne: 'Sohne', 'Segoe UI', 'Trebuchet MS', sans-serif;
+  }
+  
+  .dark {
+    --background: 24 20% 9%;
+    --foreground: 60 20% 98%;
+    --secondary-text: 30 22% 70%;
+    --accent: 36 78% 43%;
+    --accent-hover: 36 78% 34%;
+    --parchment: 24 15% 15%;
+    --sand: 24 15% 12%;
+    --border: 24 10% 20%;
+    --card: 24 15% 12%;
+    --card-foreground: 60 20% 98%;
+    --primary: 36 78% 43%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 24 15% 15%;
+    --secondary-foreground: 60 20% 98%;
+    --muted: 24 15% 12%;
+    --muted-foreground: 30 22% 70%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --popover: 24 15% 12%;
+    --popover-foreground: 60 20% 98%;
+    --input: 24 10% 20%;
+    --ring: 36 78% 43%;
+    
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+  
+  * {
+    border-color: hsl(var(--border));
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    line-height: 1.625;
+    overflow-x: clip;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sohne);
+    text-wrap: balance;
+    line-height: 1.2;
+  }
+  
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  
+  p {
+    max-width: 65ch;
+  }
+  
+  code, .mono {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  
+  button, a {
+    transition: all 200ms ease;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .font-sohne {
+    font-family: var(--font-sohne);
+  }
+}
