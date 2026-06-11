@@ -2,9 +2,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Github, FileText, Shield, Smartphone, Lock, Search, Puzzle, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ModeToggle } from '@/components/mode-toggle';
 
 function HomePage() {
   const fadeInUp = {
@@ -20,34 +20,7 @@ function HomePage() {
         <meta name="description" content="Open source forum software built for shared hosting. No Node runtime, no compromises. PHP 8.3, Laravel 13, MySQL ready." />
       </Helmet>
 
-      {/* Sticky Navigation */}
-      <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-8">
-              <a href="/" className="text-xl font-bold font-sohne tracking-tight">
-                <span className="text-foreground">Nov</span>
-                <span className="text-[hsl(var(--accent))]">Fora</span>
-              </a>
-              <div className="hidden md:flex items-center gap-6">
-                <a href="#features" className="text-sm font-medium text-secondary-text hover:text-foreground transition-colors">Features</a>
-                <a href="#deployment" className="text-sm font-medium text-secondary-text hover:text-foreground transition-colors">Docs</a>
-                <a href="#footer" className="text-sm font-medium text-secondary-text hover:text-foreground transition-colors">Community</a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-secondary-text hover:text-foreground transition-colors">GitHub</a>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <ModeToggle />
-              <Button 
-                variant="outline" 
-                className="border-[hsl(var(--accent))] text-[hsl(var(--accent))] hover:bg-[hsl(var(--accent))]/10 font-sohne font-medium"
-              >
-                Deploy free <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </nav>
+
 
       {/* Hero Section */}
       <section className="bg-[hsl(var(--sand))] text-foreground py-20 md:py-32">
@@ -252,6 +225,14 @@ function HomePage() {
                 Event hooks, service providers, and Blade components. Build custom features without forking the core.
               </p>
             </motion.div>
+            </motion.div>
+          </div>
+          <div className="mt-12 text-center">
+            <Link to="/features">
+              <Button variant="outline" className="border-border text-foreground hover:bg-accent hover:text-accent-foreground font-sohne font-medium">
+                View all features <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -340,33 +321,17 @@ function HomePage() {
               </ul>
             </motion.div>
           </div>
+          <div className="mt-12 text-center">
+            <Link to="/hosting">
+              <Button variant="outline" className="border-border text-foreground hover:bg-accent hover:text-accent-foreground font-sohne font-medium">
+                Learn more about hosting <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer id="footer" className="bg-[hsl(var(--parchment))] text-foreground border-t border-border py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="font-sohne font-medium text-sm text-secondary-text tracking-wide">
-              <span className="font-bold text-foreground">NovFora</span> · novus + fora · open source
-            </div>
-            <div className="flex items-center gap-6">
-              <a href="#" className="text-sm text-secondary-text hover:text-foreground transition-colors font-sohne">
-                Apache 2.0
-              </a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-sm text-secondary-text hover:text-foreground transition-colors font-sohne">
-                GitHub
-              </a>
-              <a href="#" className="text-sm text-secondary-text hover:text-foreground transition-colors font-sohne">
-                Docs
-              </a>
-              <a href="#" className="text-sm text-secondary-text hover:text-foreground transition-colors font-sohne">
-                Community
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+
     </>
   );
 }
