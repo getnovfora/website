@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { ArrowRight, Github, FileText, Shield, Smartphone, Lock, Search, Puzzle, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ModeToggle } from '@/components/mode-toggle';
 
 function HomePage() {
   const fadeInUp = {
@@ -35,12 +36,15 @@ function HomePage() {
                 <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-secondary-text hover:text-foreground transition-colors">GitHub</a>
               </div>
             </div>
-            <Button 
-              variant="outline" 
-              className="border-[hsl(var(--accent))] text-[hsl(var(--accent))] hover:bg-[hsl(var(--accent))]/10 font-sohne font-medium"
-            >
-              Deploy free <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+            <div className="flex items-center gap-4">
+              <ModeToggle />
+              <Button 
+                variant="outline" 
+                className="border-[hsl(var(--accent))] text-[hsl(var(--accent))] hover:bg-[hsl(var(--accent))]/10 font-sohne font-medium"
+              >
+                Deploy free <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
       </nav>
