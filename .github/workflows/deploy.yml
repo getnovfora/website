@@ -37,4 +37,4 @@ jobs:
           local-dir: ./dist/apps/web/
           # The destination directory on your Hostinger server
           # If your FTP user lands exactly inside public_html, change this to ./
-          server-dir: /public_html/
+          server-dir: /
