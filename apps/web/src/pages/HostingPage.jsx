@@ -108,7 +108,7 @@ function HostingPage() {
             <p className="text-secondary-text mb-8 leading-relaxed">
               NovFora detects the available services in your environment and degrades gracefully if a service goes down or isn't installed. You're never forced to pay for infrastructure you don't need.
             </p>
-            <a href="https://github.com/echo5tech/hearth" target="_blank" rel="noreferrer">
+            <a href="https://github.com/getnovfora/novfora" target="_blank" rel="noreferrer">
               <Button size="lg" className="bg-[hsl(var(--accent))] text-white hover:bg-[hsl(var(--accent-hover))] font-sohne">
                 Read the Architecture Docs <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

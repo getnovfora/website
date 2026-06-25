@@ -1,338 +1,184 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Github, FileText, Shield, Smartphone, Lock, Search, Puzzle, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Check, Shield, Search, Smartphone, Puzzle, Palette, PackageOpen,
+  Lock, PenLine, ShieldCheck, Users, KeyRound, Webhook, RefreshCw, CreditCard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-function HomePage() {
-  const fadeInUp = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.5 }
-  };
+const up = { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } };
+const CREAM = '#F3E8DD', SECONDARY = '#CFC9BE', AMBER = '#EBA94B', OK = '#35B07A';
 
+const PROBLEMS = [
+  { icon: Shield, t: 'Spam overwhelms', d: 'Spam is the number-one forum killer, usually bolted on late.', f: 'Trust levels wired into permissions, blocklist screening, swappable CAPTCHA, and a hold queue — first-class from day one.' },
+  { icon: Search, t: 'Search is weak', d: 'Members cannot find what they need, so knowledge rots.', f: 'MySQL full-text on shared hosting, Meilisearch when you scale — one experience, always permission-safe.' },
+  { icon: Smartphone, t: 'Mobile feels dated', d: 'Most forums still feel like 2009 on a phone.', f: 'A mobile-first interface and an installable PWA with push notifications.' },
+  { icon: Puzzle, t: 'Add-ons break upgrades', d: 'One plugin and you are stuck on an old version forever.', f: 'A versioned module API with pre-upgrade compatibility checks — add-ons that survive upgrades.' },
+  { icon: Palette, t: 'Theming needs core edits', d: 'Customize the look and the next update wipes it out.', f: 'Point-and-click appearance, a layout configurator, and a sandboxed template layer — no core edits, ever.' },
+  { icon: PackageOpen, t: 'Migration is fragile', d: 'Moving in loses attachments, passwords, and your SEO.', f: 'Resumable importers with attachment verification, password preservation, and 301 redirect maps.' },
+];
+
+const FEATURES = [
+  { icon: Lock, t: 'Permissions you can reason about', d: 'A three-state Allow / No / Never engine across categories, forums, and topics — with an inspector that tells you exactly why anyone can or cannot do anything.' },
+  { icon: PenLine, t: 'WYSIWYG-first editor', d: 'Friendly by default, Markdown when you want it, BBCode for imports. Attachments, polls, mentions, and oEmbed built in.' },
+  { icon: ShieldCheck, t: 'First-class anti-spam', d: 'Trust levels, StopForumSpam, CAPTCHA, rate limits, word filters, and a false-positive-guarded hold queue.' },
+  { icon: Users, t: 'Clubs & groups', d: 'Member-run sub-communities with their own forums and privacy, plus auto-promoting groups and custom roles.' },
+  { icon: KeyRound, t: 'SSO & accounts', d: 'Sign in with Google, GitHub, or Discord; mandatory 2FA for staff; an enterprise SAML scaffold.' },
+  { icon: Webhook, t: 'REST API & webhooks', d: 'A versioned, permission-aware API and HMAC-signed, SSRF-guarded webhooks to wire NovFora into anything.' },
+  { icon: RefreshCw, t: 'Upgrades that do not break', d: 'Reversible migrations and a backup-first, cron-driven auto-upgrade. No manual database surgery.' },
+  { icon: Smartphone, t: 'PWA & notifications', d: 'Installable on any device, with web push, digests, and a full in-app notification system.' },
+  { icon: CreditCard, t: 'Paid memberships', d: 'Membership tiers with perks gated cleanly through the permission engine — manual or Stripe, your call.' },
+];
+
+const TIERS = [
+  ['Cache & queue', 'File / database, drained by cron', 'Redis + queue workers'],
+  ['Search', 'MySQL full-text', 'Meilisearch / Typesense'],
+  ['Real-time', 'Live polling', 'WebSockets (Reverb / Pusher)'],
+  ['Media & email', 'Local disk · host SMTP', 'S3 / MinIO · SES / Postmark'],
+  ['Install', 'No-SSH web installer + one cron line', 'Docker compose, ready to go'],
+];
+
+export default function HomePage() {
   return (
     <>
       <Helmet>
-        <title>NovFora - Your community. Your server. Forever.</title>
-        <meta name="description" content="Open source forum software built for shared hosting. No Node runtime, no compromises. PHP 8.3, Laravel 13, MySQL ready." />
+        <title>NovFora — Own your forum. Build your home.</title>
+        <meta name="description" content="NovFora is modern, extensible, self-hosted forum software for independent communities. Runs on the hosting you already have. Apache-2.0." />
       </Helmet>
 
-
-
-      {/* Hero Section */}
-      <section className="bg-[hsl(var(--sand))] text-foreground py-20 md:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div {...fadeInUp} className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-background/50 text-sm font-semibold text-secondary-text mb-8 font-sohne tracking-wide">
-              Open source · Apache 2.0
+      {/* HERO */}
+      <section className="relative overflow-hidden border-b border-border">
+        <picture className="absolute inset-0 block">
+          <source srcSet="/hero-cabin.webp" type="image/webp" />
+          <img src="/hero-cabin.jpg" alt="A cabin on a hill at dusk under the milky way, with a community gathered" className="w-full h-full object-cover" style={{ objectPosition: '68% center' }} />
+        </picture>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(9,9,14,.96) 0%, rgba(9,9,14,.84) 40%, rgba(9,9,14,.5) 68%, rgba(9,9,14,.15) 100%)' }} />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+          <motion.div {...up}>
+            <span className="inline-flex items-center gap-2 text-[13px] rounded-full px-3.5 py-1.5 mb-6" style={{ color: '#9DC0F8', background: 'rgba(77,147,242,.12)', border: '1px solid rgba(77,147,242,.3)' }}>v1.0 now available · Open source · Apache-2.0</span>
+            <h1 className="font-serif font-semibold leading-[1.03] text-5xl md:text-6xl" style={{ color: CREAM }}>Own your forum.<br />Build your <span style={{ color: AMBER }}>home.</span></h1>
+            <p className="mt-5 text-lg max-w-[46ch]" style={{ color: SECONDARY }}>NovFora is modern, extensible, self-hosted forum software for independent communities. Your community, your data, your rules — on the hosting you already have.</p>
+            <div className="mt-7 flex gap-3 flex-wrap">
+              <Button size="lg">Get Started <ArrowRight className="ml-1.5 h-4 w-4" /></Button>
+              <Button size="lg" variant="outline" className="bg-transparent border-white/25 text-white hover:bg-white/10 hover:text-white">Explore the live demo</Button>
             </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 leading-tight">
-              Your community.<br />Your server. Forever.
-            </h1>
-            
-            <p className="font-sohne font-medium text-sm text-secondary-text mb-6 tracking-wide">
-              novus + fora · Latin: new gathering places
-            </p>
-            
-            <p className="text-lg text-secondary-text mb-10 max-w-2xl mx-auto leading-relaxed">
-              NovFora is open source forum software designed to run anywhere PHP runs. 
-              No complex infrastructure, no vendor lock-in, no monthly fees. 
-              Deploy on shared hosting or scale to dedicated servers—your choice, your control.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-              <Button 
-                size="lg" 
-                className="bg-[hsl(var(--accent))] text-white hover:bg-[hsl(var(--accent-hover))] active:scale-[0.98] transition-all font-sohne font-medium"
-              >
-                Start your community <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="border-foreground/20 hover:bg-foreground/5 active:scale-[0.98] transition-all font-sohne font-medium"
-              >
-                <Github className="mr-2 h-5 w-5" />
-                View on GitHub
-              </Button>
+            <div className="mt-7 flex gap-5 flex-wrap text-sm" style={{ color: SECONDARY }}>
+              {[['Self-hosted', AMBER], ['Open source', '#4D93F2'], ['Privacy-first', '#8E76E6'], ['No lock-in', OK]].map(([l, c]) => (
+                <span key={l} className="inline-flex items-center gap-2"><span className="w-2 h-2 rounded-sm" style={{ background: c }} />{l}</span>
+              ))}
             </div>
-            
-            <div className="flex flex-wrap items-center justify-center gap-3 font-sohne font-medium text-xs text-secondary-text tracking-wide uppercase">
-              <span className="px-3 py-1.5 rounded-md bg-background/60 border border-border">PHP 8.3 · Laravel 13</span>
-              <span className="px-3 py-1.5 rounded-md bg-background/60 border border-border">MySQL / MariaDB</span>
-              <span className="px-3 py-1.5 rounded-md bg-background/60 border border-border">No Node runtime</span>
-              <span className="px-3 py-1.5 rounded-md bg-background/60 border border-border">Shared-host ready</span>
+            <div className="mt-11 grid grid-cols-2 md:grid-cols-4 rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(243,232,221,.14)' }}>
+              {[['$5/mo', 'Runs on commodity shared hosting'], ['0', 'Daemons required on the baseline tier'], ['1', 'Codebase, two tiers — it scales with you'], ['Apache-2.0', 'Genuinely yours, forever']].map(([b, s], i) => (
+                <div key={i} className="p-5" style={{ background: 'rgba(11,11,16,.55)', borderRight: '1px solid rgba(243,232,221,.1)' }}>
+                  <div className="font-serif font-semibold text-2xl" style={{ color: CREAM }}>{b}</div>
+                  <div className="text-xs mt-1" style={{ color: SECONDARY }}>{s}</div>
+                </div>
+              ))}
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Audience Cards */}
-      <section className="bg-background py-20">
+      {/* TRUST */}
+      <div className="border-b border-border py-8 text-center">
+        <p className="text-xs text-secondary-text mb-3">Runs anywhere PHP runs — from a $5 shared host to Docker and a VPS</p>
+        <div className="flex gap-7 flex-wrap justify-center text-[15px] font-medium text-secondary-text/80">
+          {['Hostinger', 'cPanel', 'DigitalOcean', 'Linode', 'Docker', 'Ubuntu', 'MySQL · MariaDB'].map((h) => <span key={h}>{h}</span>)}
+        </div>
+      </div>
+
+      {/* PROBLEM */}
+      <section className="py-20 md:py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8">
-            <motion.div 
-              {...fadeInUp}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-card border border-border rounded-xl p-8 hover:shadow-lg transition-shadow"
-            >
-              <div className="font-sohne text-xs font-semibold text-[hsl(var(--accent))] tracking-widest mb-4 uppercase">
-                For Community Managers
+          <motion.div {...up} className="text-center max-w-2xl mx-auto mb-14">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[hsl(var(--accent))] mb-3">Why NovFora</p>
+            <h2 className="text-3xl md:text-4xl font-semibold mb-3">Forums fail for the same handful of reasons</h2>
+            <p className="text-secondary-text">We studied what kills communities on phpBB, MyBB, SMF, XenForo, and Discourse — then fixed each one in the core, not as an afterthought.</p>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-5">
+            {PROBLEMS.map((p) => (
+              <div key={p.t} className="bg-card border border-border rounded-2xl p-6">
+                <div className="w-10 h-10 rounded-xl bg-[hsl(var(--accent))]/12 flex items-center justify-center mb-3"><p.icon className="h-5 w-5 text-[hsl(var(--accent))]" /></div>
+                <h3 className="text-lg font-semibold mb-1.5">{p.t}</h3>
+                <p className="text-sm text-secondary-text">{p.d}</p>
+                <p className="text-[13px] mt-3 flex gap-2" style={{ color: OK }}><Check className="h-4 w-4 mt-0.5 shrink-0" /><span>{p.f}</span></p>
               </div>
-              <h3 className="text-2xl font-bold text-foreground mb-4">
-                No sysadmin required
-              </h3>
-              <p className="text-secondary-text leading-relaxed">
-                Upload files via FTP, run the installer, and you're live. 
-                NovFora works on the same $5/month shared hosting you already use for WordPress. 
-                No Docker knowledge, no command line, no server configuration.
-              </p>
-            </motion.div>
-            
-            <motion.div 
-              {...fadeInUp}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-card border border-border rounded-xl p-8 hover:shadow-lg transition-shadow"
-            >
-              <div className="font-sohne text-xs font-semibold text-[hsl(var(--accent))] tracking-widest mb-4 uppercase">
-                For Self-Hosters & Developers
-              </div>
-              <h3 className="text-2xl font-bold text-foreground mb-4">
-                No compromises on the stack
-              </h3>
-              <p className="text-secondary-text leading-relaxed">
-                Built on Laravel 13 with modern PHP 8.3 features. 
-                Clean MVC architecture, comprehensive test coverage, and a documented extension API. 
-                Deploy with Docker, configure with environment variables, extend with packages.
-              </p>
-            </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section id="features" className="bg-[hsl(var(--parchment))] text-foreground py-20">
+      {/* FEATURES */}
+      <section className="py-20 md:py-24 bg-[hsl(var(--sand))]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="font-sohne text-xs font-semibold text-[hsl(var(--accent))] tracking-widest mb-4 uppercase">
-              Features
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Everything a forum needs
-            </h2>
-            <p className="text-lg text-secondary-text max-w-2xl mx-auto">
-              Modern features without the bloat. Fast, accessible, and built to last.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <motion.div 
-              {...fadeInUp}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-background/60 rounded-xl p-6 border border-border"
-            >
-              <div className="w-12 h-12 rounded-lg bg-[hsl(var(--accent))]/10 flex items-center justify-center mb-4">
-                <FileText className="h-6 w-6 text-[hsl(var(--accent))]" />
+          <motion.div {...up} className="text-center max-w-2xl mx-auto mb-14">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[hsl(var(--accent))] mb-3">Everything, in the box</p>
+            <h2 className="text-3xl md:text-4xl font-semibold mb-3">A complete community platform</h2>
+            <p className="text-secondary-text">NovFora 1.0 ships the fundamentals and the polish — no paid add-ons to reach feature parity.</p>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-5">
+            {FEATURES.map((f) => (
+              <div key={f.t} className="bg-card border border-border rounded-2xl p-6">
+                <div className="w-10 h-10 rounded-xl bg-[hsl(var(--primary))]/12 flex items-center justify-center mb-3"><f.icon className="h-5 w-5 text-[hsl(var(--primary))]" /></div>
+                <h3 className="text-base font-semibold mb-1.5">{f.t}</h3>
+                <p className="text-sm text-secondary-text">{f.d}</p>
               </div>
-              <h3 className="text-lg font-bold text-foreground mb-2">
-                WYSIWYG first
-              </h3>
-              <p className="text-sm text-secondary-text leading-relaxed">
-                Rich text editor with Markdown support. Format posts without learning syntax. Preview before posting.
-              </p>
-            </motion.div>
-            
-            <motion.div 
-              {...fadeInUp}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-background/60 rounded-xl p-6 border border-border"
-            >
-              <div className="w-12 h-12 rounded-lg bg-[hsl(var(--accent))]/10 flex items-center justify-center mb-4">
-                <Shield className="h-6 w-6 text-[hsl(var(--accent))]" />
-              </div>
-              <h3 className="text-lg font-bold text-foreground mb-2">
-                Built-in spam defense
-              </h3>
-              <p className="text-sm text-secondary-text leading-relaxed">
-                Rate limiting, CAPTCHA integration, and automated pattern detection. Stop spam without third-party services.
-              </p>
-            </motion.div>
-            
-            <motion.div 
-              {...fadeInUp}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="bg-background/60 rounded-xl p-6 border border-border"
-            >
-              <div className="w-12 h-12 rounded-lg bg-[hsl(var(--accent))]/10 flex items-center justify-center mb-4">
-                <Smartphone className="h-6 w-6 text-[hsl(var(--accent))]" />
-              </div>
-              <h3 className="text-lg font-bold text-foreground mb-2">
-                Mobile-first layout
-              </h3>
-              <p className="text-sm text-secondary-text leading-relaxed">
-                Responsive design that works on every screen size. Touch-optimized controls. Fast page loads on 3G.
-              </p>
-            </motion.div>
-            
-            <motion.div 
-              {...fadeInUp}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="bg-background/60 rounded-xl p-6 border border-border"
-            >
-              <div className="w-12 h-12 rounded-lg bg-[hsl(var(--accent))]/10 flex items-center justify-center mb-4">
-                <Lock className="h-6 w-6 text-[hsl(var(--accent))]" />
-              </div>
-              <h3 className="text-lg font-bold text-foreground mb-2">
-                Granular permissions
-              </h3>
-              <p className="text-sm text-secondary-text leading-relaxed">
-                Role-based access control for every action. Private forums, read-only categories, moderator tools.
-              </p>
-            </motion.div>
-            
-            <motion.div 
-              {...fadeInUp}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="bg-background/60 rounded-xl p-6 border border-border"
-            >
-              <div className="w-12 h-12 rounded-lg bg-[hsl(var(--accent))]/10 flex items-center justify-center mb-4">
-                <Search className="h-6 w-6 text-[hsl(var(--accent))]" />
-              </div>
-              <h3 className="text-lg font-bold text-foreground mb-2">
-                Search that works
-              </h3>
-              <p className="text-sm text-secondary-text leading-relaxed">
-                Full-text search with MySQL. Filter by author, date, category. No external search service required.
-              </p>
-            </motion.div>
-            
-            <motion.div 
-              {...fadeInUp}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="bg-background/60 rounded-xl p-6 border border-border"
-            >
-              <div className="w-12 h-12 rounded-lg bg-[hsl(var(--accent))]/10 flex items-center justify-center mb-4">
-                <Puzzle className="h-6 w-6 text-[hsl(var(--accent))]" />
-              </div>
-              <h3 className="text-lg font-bold text-foreground mb-2">
-                Clean extension API
-              </h3>
-              <p className="text-sm text-secondary-text leading-relaxed">
-                Event hooks, service providers, and Blade components. Build custom features without forking the core.
-              </p>
-            </motion.div>
-          </div>
-          <div className="mt-12 text-center">
-            <Link to="/features">
-              <Button variant="outline" className="border-border text-foreground hover:bg-accent hover:text-accent-foreground font-sohne font-medium">
-                View all features <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Deployment Tiers */}
-      <section id="deployment" className="bg-background py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="font-sohne text-xs font-semibold text-[hsl(var(--accent))] tracking-widest mb-4 uppercase">
-              Deployment
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              One codebase, two tiers
-            </h2>
-            <p className="text-lg text-secondary-text max-w-2xl mx-auto">
-              Start simple, scale when ready. Same software, different infrastructure.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <motion.div 
-              {...fadeInUp}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-card border border-border rounded-xl p-8"
-            >
-              <div className="inline-block px-3 py-1 rounded-md bg-muted font-sohne text-xs font-semibold text-secondary-text mb-4 tracking-wider uppercase">
-                Baseline
-              </div>
-              <h3 className="text-2xl font-bold text-foreground mb-2">
-                Shared PHP host
-              </h3>
-              <p className="text-secondary-text mb-6 leading-relaxed">
-                Upload via FTP, run the web installer, done. Works on any cPanel host with PHP 8.3 and MySQL.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-[hsl(var(--accent))] mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-secondary-text">Starting around $5/month hosting cost</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-[hsl(var(--accent))] mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-secondary-text">No command line required</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-[hsl(var(--accent))] mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-secondary-text">Automatic updates via web UI</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-[hsl(var(--accent))] mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-secondary-text">Good for 1-5k active users</span>
-                </li>
-              </ul>
-            </motion.div>
-            
-            <motion.div 
-              {...fadeInUp}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-card border-2 border-[hsl(var(--accent))]/30 rounded-xl p-8 relative"
-            >
-              <div className="inline-block px-3 py-1 rounded-md bg-[hsl(var(--accent))]/10 font-sohne text-xs font-semibold text-[hsl(var(--accent))] mb-4 tracking-wider uppercase">
-                Enhanced
-              </div>
-              <h3 className="text-2xl font-bold text-foreground mb-2">
-                Docker / VPS
-              </h3>
-              <p className="text-secondary-text mb-6 leading-relaxed">
-                Deploy with Docker Compose or configure manually on a VPS. Full control over caching, queues, and scaling.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-[hsl(var(--accent))] mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-secondary-text">Redis caching & sessions</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-[hsl(var(--accent))] mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-secondary-text">Background job queues</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-[hsl(var(--accent))] mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-secondary-text">Horizontal scaling ready</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-[hsl(var(--accent))] mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-secondary-text">Scales to 100k+ users</span>
-                </li>
-              </ul>
-            </motion.div>
-          </div>
-          <div className="mt-12 text-center">
-            <Link to="/hosting">
-              <Button variant="outline" className="border-border text-foreground hover:bg-accent hover:text-accent-foreground font-sohne font-medium">
-                Learn more about hosting <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+      {/* TIERS */}
+      <section className="py-20 md:py-24 bg-background">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div {...up} className="text-center max-w-2xl mx-auto mb-12">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[hsl(var(--accent))] mb-3">One codebase, two tiers</p>
+            <h2 className="text-3xl md:text-4xl font-semibold mb-3">Start on $5 hosting. Scale when you are ready.</h2>
+            <p className="text-secondary-text">The same NovFora detects what your server offers and uses it — and never errors because an enhanced service is not there.</p>
+          </motion.div>
+          <div className="rounded-2xl border border-border overflow-hidden bg-card overflow-x-auto">
+            <table className="w-full text-sm min-w-[640px]">
+              <thead><tr className="border-b border-border">
+                <th className="text-left p-4"></th>
+                <th className="text-left p-4 font-serif font-semibold text-[hsl(var(--primary))]">Baseline · shared host</th>
+                <th className="text-left p-4 font-serif font-semibold text-[hsl(var(--accent))]">Enhanced · Docker / VPS</th>
+              </tr></thead>
+              <tbody>
+                {TIERS.map((r) => (
+                  <tr key={r[0]} className="border-b border-border last:border-0">
+                    <td className="p-4 text-secondary-text">{r[0]}</td><td className="p-4">{r[1]}</td><td className="p-4">{r[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
 
+      {/* MIGRATION */}
+      <section className="py-20 bg-[hsl(var(--sand))] text-center">
+        <div className="max-w-3xl mx-auto px-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[hsl(var(--accent))] mb-3">Bring your community with you</p>
+          <h2 className="text-3xl md:text-4xl font-semibold mb-4">Coming from phpBB, MyBB, SMF, or XenForo?</h2>
+          <p className="text-secondary-text mb-6">Import members, forums, topics, posts, and attachments — with passwords preserved and your old URLs 301-redirected, so your search rankings survive the move.</p>
+          <div className="flex gap-3 justify-center flex-wrap mb-7">
+            {['phpBB', 'XenForo', 'MyBB', 'SMF'].map((s) => <span key={s} className="text-sm bg-card border border-border rounded-lg px-4 py-2">{s}</span>)}
+          </div>
+          <Button asChild size="lg" variant="outline"><Link to="/migration">Read the migration guide <ArrowRight className="ml-1.5 h-4 w-4" /></Link></Button>
+        </div>
+      </section>
 
+      {/* CTA */}
+      <section className="py-24 text-center bg-background" style={{ backgroundImage: 'radial-gradient(ellipse at 50% 120%, hsl(var(--accent) / 0.13), transparent 60%)' }}>
+        <div className="max-w-2xl mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl font-semibold mb-4">Own your forum. Build your <span className="text-[hsl(var(--accent))]">home.</span></h2>
+          <p className="text-lg text-secondary-text mb-7">Open source, self-hosted, and built to last. Stand up your community in an afternoon.</p>
+          <div className="flex gap-3 justify-center flex-wrap">
+            <Button size="lg">Get Started <ArrowRight className="ml-1.5 h-4 w-4" /></Button>
+            <Button asChild size="lg" variant="outline"><a href="https://github.com/getnovfora/novfora">Star on GitHub</a></Button>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
-
-export default HomePage;
