@@ -1,0 +1,7 @@
+## Pages
+- [Compare — NovFora](/compare): How NovFora compares to phpBB, MyBB, SMF, XenForo/Invision, and Discourse — honestly.
+- [Features — NovFora](/features): Everything NovFora 1.0 ships: permissions, editor, anti-spam, clubs, SSO, API, importers, and more — no paid add-ons to reach parity.
+- [Hosting — NovFora](/hosting): NovFora runs anywhere PHP runs — from a $5 shared host (no SSH) to Docker and a VPS. One codebase, two tiers.
+- [Migration — NovFora](/migration): Import your community from phpBB, XenForo, MyBB, or SMF — members, content, attachments, passwords, and SEO redirects preserved.
+- [NovFora — Own your forum. Build your home.](/home): NovFora is modern, extensible, self-hosted forum software for independent communities. Runs on the hosting you already have. Apache-2.0.
+- [Roadmap — NovFora](/roadmap): What
