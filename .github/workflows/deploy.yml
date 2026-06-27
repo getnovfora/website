@@ -38,3 +38,12 @@ jobs:
           # The destination directory on your Hostinger server
           # If your FTP user lands exactly inside public_html, change this to ./
           server-dir: /
+          # Never upload or DELETE these server paths. 'community' is a symlink to the
+          # separate Laravel forum app (mounted above the web root) — without this, the
+          # mirror deploy deletes it every run and breaks novfora.com/community.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            community
+            community/**
