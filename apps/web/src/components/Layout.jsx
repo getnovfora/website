@@ -44,6 +44,7 @@ function Layout() {
                 {NAV.map((n) => (
                   <Link key={n.to} to={n.to} className="text-sm font-medium text-secondary-text hover:text-foreground transition-colors">{n.label}</Link>
                 ))}
+                <a href="https://novfora.com/community" className="text-sm font-medium text-secondary-text hover:text-foreground transition-colors">Community</a>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -70,7 +71,7 @@ function Layout() {
             </div>
             <FooterCol title="Product" links={[['Features', '/features'], ['Compare', '/compare'], ['Hosting', '/hosting'], ['Roadmap', '/roadmap']]} />
             <FooterCol title="Resources" links={[['Migration', '/migration'], ['Documentation', 'https://novfora.com/docs'], ['Demo', '#'], ['Changelog', '#']]} />
-            <FooterCol title="Community" links={[['GitHub', GH], ['Discussions', '#'], ['Contributing', '#'], ['License', '#']]} />
+            <FooterCol title="Community" links={[['Community Forum', 'https://novfora.com/community'], ['GitHub', GH], ['Discussions', '#'], ['Contributing', '#'], ['License', '#']]} />
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-border pt-6 text-sm text-secondary-text">
             <span>© 2026 The NovFora Authors · Apache-2.0</span>
