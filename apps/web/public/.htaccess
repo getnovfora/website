@@ -1,6 +1,11 @@
+# Allow the /community symlink (separate Laravel forum app, mounted above web root) to be followed
+Options +FollowSymLinks
+
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	RewriteBase /
+	# /community is the forum app (served via symlink) — never rewrite it into the marketing SPA
+	RewriteCond %{REQUEST_URI} !^/community(/|$)
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^ index.html [L]
